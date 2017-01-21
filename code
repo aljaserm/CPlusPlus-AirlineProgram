@@ -1,0 +1,418 @@
+#include<iostream>
+#include<string>
+#include<fstream>
+using namespace std;
+class airlines
+{
+public:
+void airlines::start_program();
+void airlines::start_program1();
+void airlines::modifly_flight();
+void airlines::modify_reservation();
+void airlines::report();
+void airlines::exit_program();
+int airlines::menu();
+private:
+	int flight_num[100], flight_num1[100],reservation_code[100], i, count, count1 ;
+	string flight_orgin[100], flight_dest[100], flight_date[100], flight_time[100], last_name[100], first_name[100], seat_type[100];
+	double seat_cost[100];
+	char y;
+	
+
+};
+
+int main ()
+{
+  int selection;
+  airlines data;
+  data.start_program();
+  data.start_program1();
+  selection = data.menu();
+	while (selection!= 4)
+	{
+		if (selection == 1)
+		{
+			data.modifly_flight();
+		}
+		else
+		if (selection == 2)
+		{
+			data.modify_reservation();
+		}
+		else
+		if (selection == 3)
+		{
+			data.report();
+		}
+	selection = data.menu();
+	}
+
+	data.exit_program();
+	system("pause");
+	return 0;
+}//end of while loop
+
+void airlines::start_program()
+{
+	ifstream infile;
+	count=-1;
+	infile.open("flights.dat");
+		while(!infile.eof())
+		{
+		count=count+1;
+     	infile>>flight_num[count]>>flight_orgin[count]>>flight_dest[count]>>flight_date[count]>>flight_time[count];
+	    }
+		infile.close();
+}// end of void start_program()
+
+void airlines::start_program1()
+{
+	string slected_seat;
+	double total=0;
+	ifstream infile;
+	count1=-1;
+	infile.open("reservation.dat");
+	while(!infile.eof())
+	{
+		count1=count1+1;
+		      infile>>reservation_code[count1]>>flight_num1[count1]>>last_name[count1]>>first_name[count1]>>seat_type[count1]>>seat_cost[count1];
+	}
+	infile.close();
+
+
+}// end of void start_program1()
+
+void airlines::modifly_flight()
+{
+	
+	int selection2,  dflight, mflight, position=i, chflight;
+	char more='y';
+	system("cls");
+	cout<<"Modify Flight Menu"<<endl<<endl;
+	cout<<"1.Add A Flight"<<endl;
+	cout<<"2.modfiy A Flight"<<endl;
+	cout<<"3.Delete A Flight"<<endl;
+	cout<<"4.Exit Modfiy Menu"<<endl;
+	cin>>selection2;
+	while(selection2!=4)
+	{
+		if(selection2==1)
+		{
+			
+			while(more=='y')
+			{
+			count=count+1;
+			cout<<" Enter the flight number ";
+			cin>>flight_num[count];
+			cout<<"Enter the depart city ";
+			cin>>flight_orgin[count];
+			cout<<"Enter The Flight arrival ";
+			cin>>flight_dest[count];
+			cout<<"Enter the flight date ";
+			cin>>flight_date[count];
+			cout<<"Enter the flight time ";
+			cin>>flight_time[count];
+			cout<<"Do you want to add another flight y/n ";
+			cin>>more;
+			}
+			system("pause");
+		}//end of add
+
+		else
+		if (selection2==2)
+		{
+			cout<<"Enter the flight to modfiy ";
+			cin>>mflight;
+			for(i=0; i<=count; ++i)
+			{
+				if(flight_num[i]==mflight)
+					position=i;
+			}
+			cout<<"flight to modfiy (can not change the flight number "<<endl<<endl;
+			cout<<"1.flight departing "<<endl;
+			cout<<"2.flight arrival "<<endl;
+			cout<<"3.flight date "<<endl;
+			cout<<"4.flight time "<<endl;
+			cout<<"enter a number "<<endl;
+			cin>>chflight;
+			if(chflight==1)
+			{
+				cout<<"enter the new derpating city ";
+				cin>>flight_orgin[position];
+			}
+			else
+				if (chflight==2)
+				{
+					cout<<"Enter the new arrival city ";
+					cin>>flight_dest[position];
+				}
+				else
+					if (chflight==3)
+					{
+						cout<<"enter the new date ";
+						cin>>flight_date[position];
+					}
+					else
+						if (chflight==4)
+						{
+							cout<<"enter the new time ";
+							cin>>flight_time[position];
+						}
+						system("pause");
+			}//end of modfiy
+				if (selection2==3)
+				{
+					cout<<"Enter the flight to delete ";
+					cin>>dflight;
+					for(i=0; i<=count; ++i)
+					{
+						if(flight_num[i]==dflight)
+							position=i;
+					}
+					for (i=position;i<=count-1;++i)
+					{
+						flight_num[i]=flight_num[i+1];
+						flight_orgin[i]=flight_orgin[i+1];
+						flight_dest[i]=flight_dest[i+1];
+						flight_date[i]=flight_date[i+1];
+						flight_time[i]=flight_time[i+1];
+					}
+					count=count-1;
+					system("pause");
+				}//end delet flight
+	system("cls");
+	cout<<"Modify Flight Menu"<<endl<<endl;
+	cout<<"1.Add A Flight"<<endl;
+	cout<<"2.modfiy A Flight"<<endl;
+	cout<<"3.Delete A Flight"<<endl;
+	cout<<"4.Exit Modfiy Menu"<<endl;
+	cin>>selection2;
+}
+	
+
+}// end of mdfifly_flight
+
+void airlines::modify_reservation()
+{
+
+int selection3;
+char more='y';
+	
+		system("cls");
+		cout<<"reservation modfiy"<<endl<<endl;
+		cout<<"1.add a reservation"<<endl;
+		cout<<"2.exit"<<endl;
+		cout<<"make selection"<<endl;
+		cin>>selection3;
+		while(selection3!=2)
+		if(selection3==1)
+		{
+			count=count+1;
+			while(more=='y')
+			{
+			cout<<" Enter the reservation  number ";
+			cin>>reservation_code[count];
+			cout<<"Enter the flight number ";
+			cin>>flight_num1[count];
+			cout<<"Enter The last name ";
+			cin>>last_name[count];
+			cout<<"Enter the first_name ";
+			cin>>first_name[count];
+			cout<<"Enter the seat type ";
+			cin>>seat_type[count];
+			cout<<"Enter the seat cost ";
+			cin>>seat_cost[count];
+			cout<<"Do you want to add another reservation y/n ";
+			cin>>more;
+			}//end of add
+		system("pause");	
+		}
+		
+		system("cls");
+		cout<<"reservation modfiy"<<endl<<endl;
+		cout<<"1.add a reservation"<<endl;
+		cout<<"2.exit"<<endl;
+		cout<<"make selection"<<endl;
+		cin>>selection3;
+	
+}// end of modify_reservation
+
+void airlines::report()
+{
+	 
+	int selection1, i, search,j;
+	double total=0;
+	string search_type, city_search;
+	system("cls");
+	cout<<"Reoport Menue"<<endl;
+	cout<<"ACME AIRLINE"<<endl<<endl;
+	cout<<"1.All Flight info"<<endl;
+	cout<<"2.All Reservation info"<<endl;
+	cout<<"3.Value reservations of a specific type"<<endl;
+	cout<<"4.all reservations on specific flight"<<endl;
+	cout<<"5.All Flight from  A Specific City"<<endl;
+	cout<<"6.Reservation Information"<<endl;
+	cout<<"7.All Flight summary"<<endl;
+	cout<<"8.report8"<<endl;
+	cout<<"9. Exit Report menu"<<endl;
+	cout<<"Plesae make a selection??"<<endl;
+	cin>>selection1;
+	while (selection1 !=9)
+	{
+		if(selection1==1)
+			{
+				
+				for(i=0;i<=count;++i)
+				{
+				cout<<flight_num[i]<<" "<<flight_orgin[i]<<" "<<flight_dest[i]<<" "<<flight_date[i]<<" "<<flight_time[i]<<" "<<endl;
+			
+				}
+					system("pause");
+			}// end of selsct1
+		else
+			if(selection1==2)
+			{
+				
+				for(i=0;i<=count1;++i)
+				{
+				cout<<reservation_code[i]<<" "<<flight_num1[i]<<" "<<last_name[i]<<" "<<first_name[i]<<" "<<seat_type[i]<<" "<<endl;
+				}
+					system("pause");
+			}
+			else
+				if(selection1==3)
+				{
+					
+					cout<<"Enter the seat type :";
+					cin>>search_type;
+					for(i=0; i<=count1;++i)
+						
+					{
+	                  if(seat_type[i]==search_type)
+								{
+								total=total+seat_cost[i];
+								}
+					
+					}
+	       cout<<"total of"<<search_type<<"="<<total<<endl;
+		   	system("pause");
+				}
+				else
+					if(selection1==4)
+					{
+						
+					cout<<"enter the flight number you are looking for";
+					cin>>search;
+					for(i=0; i<=count1;++i)
+					{
+						if(search==flight_num1[i])
+							cout<<reservation_code[i]<<endl;
+					}
+
+					cout<<"All the reservation are on"<<search<<endl;
+						system("pause");
+					}
+					else
+						if(selection1==5)
+					{
+					cout<<"Enter The departing city you looking for "<<endl;
+					cin>>city_search;
+					for (i=0; i<=count;++i)
+					{
+						if(city_search==flight_orgin[i])
+							cout<<flight_num[i]<<" "<<flight_orgin[i]<<" "<<flight_dest[i]<<" "<<flight_date[i]<<" "<<flight_time[i]<<" "<<endl<<endl;
+					}
+					cout<<"all Flight from"<<city_search<< "are"<<endl<<endl;
+						system("pause");
+					}//end of report5
+						else
+							if(selection1==6)
+							{
+								cout<<"Enter the reservation you are looking for "<<endl;
+								cin>>search;
+								for(i=0; i<=count;++i)
+								{
+									if(search==reservation_code[i])
+										cout<<reservation_code[i]<<" "<<flight_num1[i]<<" "<<last_name[i]<<" "<<first_name[i]<<" "<<seat_type[i]<<" "<<endl<<endl;
+
+								}
+								cout<<"this is the reservation information"<<endl;
+	                       system("pause");
+							}//end of report6
+							else 
+								if(selection1==7)
+								{
+									cout<<"All Flight Summary"<<endl;
+									for(i=0;i<=count;++i)
+									{
+										cout<<endl<<flight_num[i]<<" "<<flight_orgin[i]<<" "<<flight_dest[i]<<" "<<flight_date[i]<<" "<<flight_time[i]<<" "<<endl;
+										for(j=0;j<=count1;++j)
+										{
+											if(flight_num[i]==flight_num1[j])
+											{
+												cout<<reservation_code[j]<<" "<<first_name[j]<<" "<<last_name[j]<<endl;
+											}
+										}
+									}
+									system("pause");
+								}//End of report7
+								else
+									if(selection1==8)
+									{
+										cout<<"R8"<<endl;
+									}
+    system("cls");
+	cout<<"ACME AIRLINE"<<endl<<endl;
+	cout<<"1.All Flight info"<<endl;
+	cout<<"2.All Reservation info"<<endl;
+	cout<<"3.Value reservations of a specific type"<<endl;
+	cout<<"4.all reservations on specific flight"<<endl;
+	cout<<"5.All Flight from  A Specific City"<<endl;
+	cout<<"6.Reservation Information"<<endl;
+	cout<<"7.All Flight summary"<<endl;
+	cout<<"8.report8"<<endl;
+	cout<<"9. Exit Report menu"<<endl;
+	cout<<"Plesae make a selection??"<<endl;
+	cin>>selection1;
+	}
+	
+}// end of void report 
+
+int airlines::menu()
+{
+	int selection;
+cout<<"ACME Airline Syste"<<endl<<endl;
+cout<<"1.Add/Modify Flight informaion"<<endl;
+cout<<"2.Add/Modify Reservation information"<<endl;
+cout<<"3.Report Section"<<endl;
+cout<<"4.Exit Airline System"<<endl;
+cout<<"Pleses Make a selection"<<endl<<endl;
+cin>>selection;
+return selection;
+}
+
+void airlines::exit_program()
+{
+	ofstream outfile;
+	outfile.open("flights.dat");
+	for(i=0;i<=count;++i)
+	{
+		if(i==count)
+			outfile<<flight_num[i]<<" "<<flight_orgin[i]<<" "<<flight_dest[i]<<" "<<flight_date[i]<<" "<<flight_time[i];
+		else
+			outfile<<flight_num[i]<<" "<<flight_orgin[i]<<" "<<flight_dest[i]<<" "<<flight_date[i]<<" "<<flight_time[i]<<endl;
+	}
+	outfile.close();
+
+	outfile.open("reservation.dat");
+	for(i=0;i<=count1;++i)
+	{
+		if(i==count1)
+			outfile<<reservation_code[i]<<" "<<flight_num1[i]<<" "<<last_name[i]<<" "<<first_name[i]<<" "<<seat_type[i]<<" "<<seat_cost[i];
+		else
+			outfile<<reservation_code[i]<<" "<<flight_num1[i]<<" "<<last_name[i]<<" "<<first_name[i]<<" "<<seat_type[i]<<" "<<seat_cost[i]<<endl;
+	}
+}//end of exit
+
+
+
